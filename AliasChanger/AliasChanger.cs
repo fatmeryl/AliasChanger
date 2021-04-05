@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Win32;
 
 namespace AliasChanger
 {
@@ -16,6 +17,7 @@ namespace AliasChanger
         private readonly string aliasesList;
         private readonly IConfigurationProvider aliasesProvider;
         private Dictionary<string, string> listOfAliases;
+        private MessageGenerator messageGenerator;
         public AliasChanger()
         {
             InitializeComponent();
@@ -34,6 +36,14 @@ namespace AliasChanger
         {
             RdServerAliasLbl.Visible = !sameRdAliasCheckBox.Checked;
             comboBoxRdAlias.Visible = !sameRdAliasCheckBox.Checked;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var pccWowKey = @"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\MEDICALgorithmics\PocketECG\PCClient";
+            Registry.SetValue(pccWowKey, "DefaultServerAlias", comboBoxPccAlias.Text);
+            messageGenerator = new MessageGenerator(0);
+
         }
     }
 }

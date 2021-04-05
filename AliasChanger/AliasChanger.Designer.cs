@@ -75,6 +75,7 @@ namespace AliasChanger
             this.button1.TabIndex = 1;
             this.button1.Text = "Change Alias";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // sameRdAliasCheckBox
             // 
@@ -125,7 +126,7 @@ namespace AliasChanger
             this.label1.TabIndex = 0;
             this.label1.Text = "PCC server alias";
             // 
-            // Form1
+            // AliasChanger
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -133,7 +134,7 @@ namespace AliasChanger
             this.ClientSize = new System.Drawing.Size(338, 236);
             this.Controls.Add(this.groupBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "Form1";
+            this.Name = "AliasChanger";
             this.Text = "Alias Changer";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
