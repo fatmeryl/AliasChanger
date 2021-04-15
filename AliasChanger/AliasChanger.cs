@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Win32;
 
@@ -14,18 +8,31 @@ namespace AliasChanger
 {
     public partial class AliasChanger : Form
     {
-        private readonly string aliasesList;
-        private readonly IConfigurationProvider aliasesProvider;
+        private string aliasesList;
+        private readonly string configPaths;
+        private IConfigurationProvider aliasesProvider;
+        private IConfigurationProvider configProvider;
         private Dictionary<string, string> listOfAliases;
+        private Dictionary<string, string> listOfpaths;
         private MessageGenerator messageGenerator;
         public AliasChanger()
         {
             InitializeComponent();
-            aliasesList = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Config\Aliases.json");
-            aliasesProvider = new ConfigurationFromConfigProvider(aliasesList);
-            listOfAliases = aliasesProvider.GetConfiguration();
+            FillCombobox(CreateConfigDictionary(aliasesList, @"Config\Aliases.json", aliasesProvider));
+            //listOfpaths = CreateConfigDictionary();
+        }
 
-            foreach (var value in listOfAliases.Values)
+        private Dictionary<string, string> CreateConfigDictionary(string json, string jsonFileName,
+            IConfigurationProvider configProvider)
+        {
+            json = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, jsonFileName);
+            configProvider = new ConfigurationFromConfigProvider(json);
+            return configProvider.GetConfiguration();
+        }
+
+        private void FillCombobox(Dictionary<string, string> list)
+        {
+            foreach (var value in list.Values)
             {
                 comboBoxPccAlias.Items.Add(value);
                 comboBoxRdAlias.Items.Add(value);

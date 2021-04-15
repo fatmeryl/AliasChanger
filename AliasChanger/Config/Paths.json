@@ -1,6 +1,8 @@
 {
   "PocketECGClientConfigPath": "C:\\Program Files (x86)\\Medicalgorithmics\\PocketECG Client\\PocketECGClient.exe.config",
   "RDConfigPath": "C:\\PocketECGReports\\Configuration\\config.txt",
-  "RDExeConfigPath": "C:\\Program Files (x86)\\Medicalgorithmics\\PocketECG Reports\\PocketECGReports.exe.config"
+  "RDExeConfigPath": "C:\\Program Files (x86)\\Medicalgorithmics\\PocketECG Reports\\PocketECGReports.exe.config",
+  "HKLM-Alias": "HKEY_LOCAL_MACHINE\\SOFTWARE\\WOW6432Node\\MEDICALgorithmics\\PocketECG\\PCClient"
+
 
 }
