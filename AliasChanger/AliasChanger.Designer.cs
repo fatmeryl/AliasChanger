@@ -34,20 +34,20 @@ namespace AliasChanger
             this.clearDbCheckBox = new System.Windows.Forms.CheckBox();
             this.button1 = new System.Windows.Forms.Button();
             this.sameRdAliasCheckBox = new System.Windows.Forms.CheckBox();
-            this.comboBoxRdAlias = new System.Windows.Forms.ComboBox();
-            this.comboBoxPccAlias = new System.Windows.Forms.ComboBox();
             this.RdServerAliasLbl = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.pccAliasTextBox = new System.Windows.Forms.TextBox();
+            this.RdAliasTextBox = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.RdAliasTextBox);
+            this.groupBox1.Controls.Add(this.pccAliasTextBox);
             this.groupBox1.Controls.Add(this.clearDbCheckBox);
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.sameRdAliasCheckBox);
-            this.groupBox1.Controls.Add(this.comboBoxRdAlias);
-            this.groupBox1.Controls.Add(this.comboBoxPccAlias);
             this.groupBox1.Controls.Add(this.RdServerAliasLbl);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
@@ -90,23 +90,6 @@ namespace AliasChanger
             this.sameRdAliasCheckBox.UseVisualStyleBackColor = true;
             this.sameRdAliasCheckBox.CheckedChanged += new System.EventHandler(this.sameRdAliasCheckBox_CheckedChanged);
             // 
-            // comboBoxRdAlias
-            // 
-            this.comboBoxRdAlias.FormattingEnabled = true;
-            this.comboBoxRdAlias.Location = new System.Drawing.Point(9, 107);
-            this.comboBoxRdAlias.Name = "comboBoxRdAlias";
-            this.comboBoxRdAlias.Size = new System.Drawing.Size(122, 24);
-            this.comboBoxRdAlias.TabIndex = 3;
-            this.comboBoxRdAlias.Visible = false;
-            // 
-            // comboBoxPccAlias
-            // 
-            this.comboBoxPccAlias.FormattingEnabled = true;
-            this.comboBoxPccAlias.Location = new System.Drawing.Point(9, 48);
-            this.comboBoxPccAlias.Name = "comboBoxPccAlias";
-            this.comboBoxPccAlias.Size = new System.Drawing.Size(122, 24);
-            this.comboBoxPccAlias.TabIndex = 2;
-            // 
             // RdServerAliasLbl
             // 
             this.RdServerAliasLbl.AutoSize = true;
@@ -125,6 +108,20 @@ namespace AliasChanger
             this.label1.Size = new System.Drawing.Size(112, 17);
             this.label1.TabIndex = 0;
             this.label1.Text = "PCC server alias";
+            // 
+            // pccAliasTextBox
+            // 
+            this.pccAliasTextBox.Location = new System.Drawing.Point(9, 51);
+            this.pccAliasTextBox.Name = "pccAliasTextBox";
+            this.pccAliasTextBox.Size = new System.Drawing.Size(127, 22);
+            this.pccAliasTextBox.TabIndex = 6;
+            // 
+            // RdAliasTextBox
+            // 
+            this.RdAliasTextBox.Location = new System.Drawing.Point(9, 107);
+            this.RdAliasTextBox.Name = "RdAliasTextBox";
+            this.RdAliasTextBox.Size = new System.Drawing.Size(127, 22);
+            this.RdAliasTextBox.TabIndex = 7;
             // 
             // AliasChanger
             // 
@@ -146,12 +143,12 @@ namespace AliasChanger
 
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.CheckBox sameRdAliasCheckBox;
-        private System.Windows.Forms.ComboBox comboBoxRdAlias;
-        private System.Windows.Forms.ComboBox comboBoxPccAlias;
         private System.Windows.Forms.Label RdServerAliasLbl;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox clearDbCheckBox;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox RdAliasTextBox;
+        private System.Windows.Forms.TextBox pccAliasTextBox;
     }
 }
 

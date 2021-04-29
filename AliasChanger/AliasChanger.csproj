@@ -73,9 +73,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="Config\Aliases.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Config\Paths.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

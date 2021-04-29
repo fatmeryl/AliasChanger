@@ -8,18 +8,14 @@ namespace AliasChanger
 {
     public partial class AliasChanger : Form
     {
-        private string aliasesList;
         private readonly string configPaths;
-        private IConfigurationProvider aliasesProvider;
         private IConfigurationProvider configProvider;
-        private Dictionary<string, string> listOfAliases;
         private Dictionary<string, string> listOfpaths;
         private MessageGenerator messageGenerator;
         public AliasChanger()
         {
             InitializeComponent();
-            FillCombobox(CreateConfigDictionary(aliasesList, @"Config\Aliases.json", aliasesProvider));
-            //listOfpaths = CreateConfigDictionary();
+            listOfpaths = CreateConfigDictionary(configPaths, @"Config\Paths.json", configProvider);
         }
 
         private Dictionary<string, string> CreateConfigDictionary(string json, string jsonFileName,
@@ -29,28 +25,19 @@ namespace AliasChanger
             configProvider = new ConfigurationFromConfigProvider(json);
             return configProvider.GetConfiguration();
         }
-
-        private void FillCombobox(Dictionary<string, string> list)
-        {
-            foreach (var value in list.Values)
-            {
-                comboBoxPccAlias.Items.Add(value);
-                comboBoxRdAlias.Items.Add(value);
-            }
-        }
-
+        
         private void sameRdAliasCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             RdServerAliasLbl.Visible = !sameRdAliasCheckBox.Checked;
-            comboBoxRdAlias.Visible = !sameRdAliasCheckBox.Checked;
+            RdAliasTextBox.Visible = !sameRdAliasCheckBox.Checked;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var pccWowKey = @"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\MEDICALgorithmics\PocketECG\PCClient";
-            Registry.SetValue(pccWowKey, "DefaultServerAlias", comboBoxPccAlias.Text);
+            string key;
+            listOfpaths.TryGetValue("HKLM-Alias", out key);
+            Registry.SetValue(key, "DefaultServerAlias", pccAliasTextBox.Text);
             messageGenerator = new MessageGenerator(0);
-
         }
     }
 }
