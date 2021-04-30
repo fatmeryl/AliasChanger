@@ -17,6 +17,7 @@ namespace AliasChanger
         {
             InitializeComponent();
             listOfpaths = CreateConfigDictionary(configPaths, @"Config\Paths.json", configProvider);
+            pccAliasTextBox.Select();
         }
 
         private Dictionary<string, string> CreateConfigDictionary(string json, string jsonFileName,
@@ -35,20 +36,39 @@ namespace AliasChanger
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string regaliaskey;
-            listOfpaths.TryGetValue("HKLM-Alias", out regaliaskey);
-            Registry.SetValue(regaliaskey, "DefaultServerAlias", pccAliasTextBox.Text);
-            updatePCCAlias("PocketECGClientConfigPath");
+            updateRegistryAlias("HKLM-Alias");
+            updatePCCAlias(pccAliasTextBox.Text);
             messageGenerator = new MessageGenerator(0);
         }
 
-        private void updatePCCAlias(string configName)
+        private void updateRegistryAlias(string registryPath)
+        {
+            string regaliaskey;
+            listOfpaths.TryGetValue(registryPath, out regaliaskey);
+            Registry.SetValue(regaliaskey, "DefaultServerAlias", pccAliasTextBox.Text);
+        }
+
+        private void updatePCCAlias(string providedAlias)
         {
             string pccConfigFile;
-            listOfpaths.TryGetValue(configName, out pccConfigFile);
-            string textToSearch = @"<EnvironmentSettings .*\/>";
-            string textToReplace = $"<EnvironmentSettings environmentName=\"{GetAliasWithoutDash(pccAliasTextBox.Text)}\"/>";
-            ReplaceInFile(pccConfigFile, textToSearch, textToReplace);
+            string textToSearch;
+            string textToReplace;
+
+            if (providedAlias == "local")
+            {
+                listOfpaths.TryGetValue("PocketECGClientLocal", out pccConfigFile);
+                textToSearch = @"<EnvironmentSettings .*\/>";
+                textToReplace = $"<EnvironmentSettings environmentName=\"development\" locatorServiceUri=\"https://localhost:44302/LocatorService.svc\"/>";
+                ReplaceInFile(pccConfigFile, textToSearch, textToReplace);
+            }
+            else
+            {
+                listOfpaths.TryGetValue("PocketECGClientConfigPath", out pccConfigFile);
+                textToSearch = @"<EnvironmentSettings .*\/>";
+                textToReplace = $"<EnvironmentSettings environmentName=\"{GetAliasWithoutDash(providedAlias)}\"/>";
+                ReplaceInFile(pccConfigFile, textToSearch, textToReplace);
+            }
+
         }
 
         private void ReplaceInFile(string filePath, string searchText, string replaceText)
@@ -72,7 +92,7 @@ namespace AliasChanger
         {
             if (alias.Contains("-"))
             {
-                alias = alias.Substring(0,alias.IndexOf('-'));
+                alias = alias.Substring(0, alias.IndexOf('-'));
                 return alias;
             }
             return alias;
