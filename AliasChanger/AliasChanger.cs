@@ -36,21 +36,50 @@ namespace AliasChanger
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //updateRegistryAlias("HKLM-Alias");
-            //updatePCCAlias(pccAliasTextBox.Text);
+            updateRegistryAlias("HKLM-Alias");
+            updatePCCAlias(pccAliasTextBox.Text);
+
             if (sameRdAliasCheckBox.Checked)
             {
                 RdAliasTextBox.Text = pccAliasTextBox.Text;
             }
+
             updateRDAlias(RdAliasTextBox.Text);
-            messageGenerator = new MessageGenerator(0);
+
+            if (clearDbCheckBox.Checked)
+            {
+                RemoveDatabase(pccAliasTextBox.Text);
+            }
+            else
+            {
+                messageGenerator = new MessageGenerator(State.Changed);
+            }
+
+        }
+
+        private void RemoveDatabase(string pccAlias)
+        {
+            string dbFileName = $"{pccAlias.ToUpper()}_CLIENTDB.FDB";
+            string dbFileLocation;
+            listOfpaths.TryGetValue("PCCClientDatabase", out dbFileLocation);
+            string dbFilePath = $"{dbFileLocation}\\{dbFileName}";
+
+            if (File.Exists(dbFilePath))
+            {
+                File.Delete(dbFilePath);
+                messageGenerator = new MessageGenerator(State.ChangedAndDatabaseCleared);
+            }
+            else
+            {
+                messageGenerator = new MessageGenerator(State.ChangedDatabaseNotFound);
+            }
         }
 
         private void updateRDAlias(string rdAlias)
         {
             string rdConfigPath;
             listOfpaths.TryGetValue("RDConfigPath", out rdConfigPath);
-            lineChanger(rdAlias,rdConfigPath,2 );
+            lineChanger(rdAlias, rdConfigPath, 2);
             updateRDExeConfig(rdAlias);
         }
 

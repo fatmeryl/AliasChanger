@@ -3,5 +3,7 @@
     public enum State
     {
         Changed,
+        ChangedAndDatabaseCleared,
+        ChangedDatabaseNotFound
     }
 }

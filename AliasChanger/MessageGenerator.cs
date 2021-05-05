@@ -15,6 +15,20 @@ namespace AliasChanger
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Asterisk);
                     break;
+                case State.ChangedAndDatabaseCleared:
+                    MessageBox.Show(
+                        "Aliases Changed \nDatabase Removed",
+                    "Information",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Asterisk);
+                    break;
+                case State.ChangedDatabaseNotFound:
+                    MessageBox.Show(
+                        "Aliases Changed \nDatabase Not Found",
+                        "Information",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Asterisk);
+                    break;
             }
         }
     }
