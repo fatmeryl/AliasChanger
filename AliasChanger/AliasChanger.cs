@@ -46,11 +46,24 @@ namespace AliasChanger
             messageGenerator = new MessageGenerator(0);
         }
 
-        private void updateRDAlias(string text)
+        private void updateRDAlias(string rdAlias)
         {
-            string rdConfigAlias;
-            listOfpaths.TryGetValue("RDConfigPath", out rdConfigAlias);
-            lineChanger(text,rdConfigAlias,2 );
+            string rdConfigPath;
+            listOfpaths.TryGetValue("RDConfigPath", out rdConfigPath);
+            lineChanger(rdAlias,rdConfigPath,2 );
+            updateRDExeConfig(rdAlias);
+        }
+
+        private void updateRDExeConfig(string providedAlias)
+        {
+            string rdExeConfigFile;
+            string textToSearch;
+            string textToReplace;
+            listOfpaths.TryGetValue("RDExeConfigPath", out rdExeConfigFile);
+            textToSearch = @"(?<=<value>)(.*)(?=</value>)";
+            textToReplace =
+                $"<value>https://{GetAliasWithoutDash(providedAlias)}.test.medical.local/Services/LocatorService.svc</value>";
+            ReplaceInFile(rdExeConfigFile, textToSearch, textToReplace);
         }
 
         static void lineChanger(string newText, string fileName, int line_to_edit)
