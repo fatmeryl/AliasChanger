@@ -36,9 +36,28 @@ namespace AliasChanger
 
         private void button1_Click(object sender, EventArgs e)
         {
-            updateRegistryAlias("HKLM-Alias");
-            updatePCCAlias(pccAliasTextBox.Text);
+            //updateRegistryAlias("HKLM-Alias");
+            //updatePCCAlias(pccAliasTextBox.Text);
+            if (sameRdAliasCheckBox.Checked)
+            {
+                RdAliasTextBox.Text = pccAliasTextBox.Text;
+            }
+            updateRDAlias(RdAliasTextBox.Text);
             messageGenerator = new MessageGenerator(0);
+        }
+
+        private void updateRDAlias(string text)
+        {
+            string rdConfigAlias;
+            listOfpaths.TryGetValue("RDConfigPath", out rdConfigAlias);
+            lineChanger(text,rdConfigAlias,2 );
+        }
+
+        static void lineChanger(string newText, string fileName, int line_to_edit)
+        {
+            string[] arrLine = File.ReadAllLines(fileName);
+            arrLine[line_to_edit - 1] = newText;
+            File.WriteAllLines(fileName, arrLine);
         }
 
         private void updateRegistryAlias(string registryPath)
