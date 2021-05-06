@@ -31,14 +31,14 @@ namespace AliasChanger
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AliasChanger));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.changeRDAliascheckBox = new System.Windows.Forms.CheckBox();
             this.RdAliasTextBox = new System.Windows.Forms.TextBox();
             this.pccAliasTextBox = new System.Windows.Forms.TextBox();
             this.clearDbCheckBox = new System.Windows.Forms.CheckBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.changeAliasBtn = new System.Windows.Forms.Button();
             this.sameRdAliasCheckBox = new System.Windows.Forms.CheckBox();
             this.RdServerAliasLbl = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.changeRDAliascheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,7 +48,7 @@ namespace AliasChanger
             this.groupBox1.Controls.Add(this.RdAliasTextBox);
             this.groupBox1.Controls.Add(this.pccAliasTextBox);
             this.groupBox1.Controls.Add(this.clearDbCheckBox);
-            this.groupBox1.Controls.Add(this.button1);
+            this.groupBox1.Controls.Add(this.changeAliasBtn);
             this.groupBox1.Controls.Add(this.sameRdAliasCheckBox);
             this.groupBox1.Controls.Add(this.RdServerAliasLbl);
             this.groupBox1.Controls.Add(this.label1);
@@ -60,6 +60,17 @@ namespace AliasChanger
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Settings";
+            // 
+            // changeRDAliascheckBox
+            // 
+            this.changeRDAliascheckBox.AutoSize = true;
+            this.changeRDAliascheckBox.Location = new System.Drawing.Point(120, 23);
+            this.changeRDAliascheckBox.Name = "changeRDAliascheckBox";
+            this.changeRDAliascheckBox.Size = new System.Drawing.Size(105, 17);
+            this.changeRDAliascheckBox.TabIndex = 8;
+            this.changeRDAliascheckBox.Text = "change RD alias";
+            this.changeRDAliascheckBox.UseVisualStyleBackColor = true;
+            this.changeRDAliascheckBox.CheckedChanged += new System.EventHandler(this.changeRDAliascheckBox_CheckedChanged);
             // 
             // RdAliasTextBox
             // 
@@ -77,6 +88,7 @@ namespace AliasChanger
             this.pccAliasTextBox.Name = "pccAliasTextBox";
             this.pccAliasTextBox.Size = new System.Drawing.Size(96, 20);
             this.pccAliasTextBox.TabIndex = 6;
+            this.pccAliasTextBox.TextChanged += new System.EventHandler(this.pccAliasTextBox_TextChanged);
             // 
             // clearDbCheckBox
             // 
@@ -89,16 +101,17 @@ namespace AliasChanger
             this.clearDbCheckBox.Text = "clear client DB";
             this.clearDbCheckBox.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // changeAliasBtn
             // 
-            this.button1.Location = new System.Drawing.Point(7, 120);
-            this.button1.Margin = new System.Windows.Forms.Padding(2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(222, 28);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Change Alias";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.changeAliasBtn.Enabled = false;
+            this.changeAliasBtn.Location = new System.Drawing.Point(7, 120);
+            this.changeAliasBtn.Margin = new System.Windows.Forms.Padding(2);
+            this.changeAliasBtn.Name = "changeAliasBtn";
+            this.changeAliasBtn.Size = new System.Drawing.Size(222, 28);
+            this.changeAliasBtn.TabIndex = 1;
+            this.changeAliasBtn.Text = "Change Alias";
+            this.changeAliasBtn.UseVisualStyleBackColor = true;
+            this.changeAliasBtn.Click += new System.EventHandler(this.button1_Click);
             // 
             // sameRdAliasCheckBox
             // 
@@ -136,17 +149,6 @@ namespace AliasChanger
             this.label1.TabIndex = 0;
             this.label1.Text = "PCC server alias";
             // 
-            // changeRDAliascheckBox
-            // 
-            this.changeRDAliascheckBox.AutoSize = true;
-            this.changeRDAliascheckBox.Location = new System.Drawing.Point(120, 23);
-            this.changeRDAliascheckBox.Name = "changeRDAliascheckBox";
-            this.changeRDAliascheckBox.Size = new System.Drawing.Size(105, 17);
-            this.changeRDAliascheckBox.TabIndex = 8;
-            this.changeRDAliascheckBox.Text = "change RD alias";
-            this.changeRDAliascheckBox.UseVisualStyleBackColor = true;
-            this.changeRDAliascheckBox.CheckedChanged += new System.EventHandler(this.changeRDAliascheckBox_CheckedChanged);
-            // 
             // AliasChanger
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -171,7 +173,7 @@ namespace AliasChanger
         private System.Windows.Forms.Label RdServerAliasLbl;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox clearDbCheckBox;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button changeAliasBtn;
         private System.Windows.Forms.TextBox RdAliasTextBox;
         private System.Windows.Forms.TextBox pccAliasTextBox;
         private System.Windows.Forms.CheckBox changeRDAliascheckBox;

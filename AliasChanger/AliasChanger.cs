@@ -36,22 +36,12 @@ namespace AliasChanger
 
         private void button1_Click(object sender, EventArgs e)
         {
-            updateRegistryAlias("HKLM-Alias");
-            updatePCCAlias(pccAliasTextBox.Text);
+            UpdateRegistryAlias("HKLM-Alias");
+            UpdatePCCAlias(pccAliasTextBox.Text);
             if (changeRDAliascheckBox.Checked)
             {
                 UpdateRDAlias();
             }
-        }
-
-        private void UpdateRDAlias()
-        {
-            if (sameRdAliasCheckBox.Checked)
-            {
-                RdAliasTextBox.Text = pccAliasTextBox.Text;
-            }
-
-            updateRDAlias(RdAliasTextBox.Text);
 
             if (clearDbCheckBox.Checked)
             {
@@ -62,6 +52,17 @@ namespace AliasChanger
                 messageGenerator = new MessageGenerator(State.Changed);
             }
         }
+
+        private void UpdateRDAlias()
+        {
+            if (sameRdAliasCheckBox.Checked)
+            {
+                RdAliasTextBox.Text = pccAliasTextBox.Text;
+            }
+
+            UpdateRDAlias(RdAliasTextBox.Text);
+        }
+
         private void RemoveDatabase(string pccAlias)
         {
             string dbFileName = $"{pccAlias.ToUpper()}_CLIENTDB.FDB";
@@ -80,15 +81,15 @@ namespace AliasChanger
             }
         }
 
-        private void updateRDAlias(string rdAlias)
+        private void UpdateRDAlias(string rdAlias)
         {
             string rdConfigPath;
             listOfpaths.TryGetValue("RDConfigPath", out rdConfigPath);
-            lineChanger(rdAlias, rdConfigPath, 2);
-            updateRDExeConfig(rdAlias);
+            LineChanger(rdAlias, rdConfigPath, 2);
+            UpdateRDExeConfig(rdAlias);
         }
 
-        private void updateRDExeConfig(string providedAlias)
+        private void UpdateRDExeConfig(string providedAlias)
         {
             string rdExeConfigFile;
             string textToSearch;
@@ -100,21 +101,21 @@ namespace AliasChanger
             ReplaceInFile(rdExeConfigFile, textToSearch, textToReplace);
         }
 
-        static void lineChanger(string newText, string fileName, int line_to_edit)
+        static void LineChanger(string newText, string fileName, int line_to_edit)
         {
             string[] arrLine = File.ReadAllLines(fileName);
             arrLine[line_to_edit - 1] = newText;
             File.WriteAllLines(fileName, arrLine);
         }
 
-        private void updateRegistryAlias(string registryPath)
+        private void UpdateRegistryAlias(string registryPath)
         {
             string regaliaskey;
             listOfpaths.TryGetValue(registryPath, out regaliaskey);
             Registry.SetValue(regaliaskey, "DefaultServerAlias", pccAliasTextBox.Text);
         }
 
-        private void updatePCCAlias(string providedAlias)
+        private void UpdatePCCAlias(string providedAlias)
         {
             string pccConfigFile;
             string textToSearch;
@@ -134,7 +135,6 @@ namespace AliasChanger
                 textToReplace = $"<EnvironmentSettings environmentName=\"{GetAliasWithoutDash(providedAlias)}\"/>";
                 ReplaceInFile(pccConfigFile, textToSearch, textToReplace);
             }
-
         }
 
         private void ReplaceInFile(string filePath, string searchText, string replaceText)
@@ -167,6 +167,18 @@ namespace AliasChanger
         private void changeRDAliascheckBox_CheckedChanged(object sender, EventArgs e)
         {
             sameRdAliasCheckBox.Enabled = true;
+        }
+
+        private void pccAliasTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (pccAliasTextBox.Text.Length != 0)
+            {
+                changeAliasBtn.Enabled = true;
+            }
+            else
+            {
+                changeAliasBtn.Enabled = false;
+            }
         }
     }
 }
