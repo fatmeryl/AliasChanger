@@ -83,22 +83,16 @@ namespace AliasChanger
 
         private void UpdateRDAlias(string rdAlias)
         {
-            string rdConfigPath;
-            listOfpaths.TryGetValue("RDConfigPath", out rdConfigPath);
-            LineChanger(rdAlias, rdConfigPath, 2);
+            LineChanger(rdAlias, GetPathValue("RDConfigPath"), 2);
             UpdateRDExeConfig(rdAlias);
         }
 
         private void UpdateRDExeConfig(string providedAlias)
         {
-            string rdExeConfigFile;
-            string textToSearch;
-            string textToReplace;
-            listOfpaths.TryGetValue("RDExeConfigPath", out rdExeConfigFile);
-            textToSearch = @"(?<=<value>)(.*)(?=</value>)";
-            textToReplace =
+            string textToSearch = @"(?<=<value>)(.*)(?=</value>)";
+            string textToReplace =
                 $"<value>https://{GetAliasWithoutDash(providedAlias)}.test.medical.local/Services/LocatorService.svc</value>";
-            ReplaceInFile(rdExeConfigFile, textToSearch, textToReplace);
+            ReplaceInFile(GetPathValue("RDExeConfigPath"), textToSearch, textToReplace);
         }
 
         static void LineChanger(string newText, string fileName, int line_to_edit)
@@ -110,30 +104,25 @@ namespace AliasChanger
 
         private void UpdateRegistryAlias(string registryPath)
         {
-            string regaliaskey;
-            listOfpaths.TryGetValue(registryPath, out regaliaskey);
-            Registry.SetValue(regaliaskey, "DefaultServerAlias", pccAliasTextBox.Text);
+            Registry.SetValue(GetPathValue(registryPath), "DefaultServerAlias", pccAliasTextBox.Text);
         }
 
         private void UpdatePCCAlias(string providedAlias)
         {
-            string pccConfigFile;
             string textToSearch;
             string textToReplace;
 
             if (providedAlias == "local")
             {
-                listOfpaths.TryGetValue("PocketECGClientLocal", out pccConfigFile);
                 textToSearch = @"<EnvironmentSettings .*\/>";
                 textToReplace = $"<EnvironmentSettings environmentName=\"development\" locatorServiceUri=\"https://localhost:44302/LocatorService.svc\"/>";
-                ReplaceInFile(pccConfigFile, textToSearch, textToReplace);
+                ReplaceInFile(GetPathValue("PocketECGClientLocal"), textToSearch, textToReplace);
             }
             else
             {
-                listOfpaths.TryGetValue("PocketECGClientConfigPath", out pccConfigFile);
                 textToSearch = @"<EnvironmentSettings .*\/>";
                 textToReplace = $"<EnvironmentSettings environmentName=\"{GetAliasWithoutDash(providedAlias)}\"/>";
-                ReplaceInFile(pccConfigFile, textToSearch, textToReplace);
+                ReplaceInFile(GetPathValue("PocketECGClientConfigPath"), textToSearch, textToReplace);
             }
         }
 
@@ -179,6 +168,13 @@ namespace AliasChanger
             {
                 changeAliasBtn.Enabled = false;
             }
+        }
+
+        private string GetPathValue(string key)
+        {
+            string value;
+            listOfpaths.TryGetValue(key, out value);
+            return value;
         }
     }
 }
