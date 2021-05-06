@@ -38,7 +38,14 @@ namespace AliasChanger
         {
             updateRegistryAlias("HKLM-Alias");
             updatePCCAlias(pccAliasTextBox.Text);
+            if (changeRDAliascheckBox.Checked)
+            {
+                UpdateRDAlias();
+            }
+        }
 
+        private void UpdateRDAlias()
+        {
             if (sameRdAliasCheckBox.Checked)
             {
                 RdAliasTextBox.Text = pccAliasTextBox.Text;
@@ -54,9 +61,7 @@ namespace AliasChanger
             {
                 messageGenerator = new MessageGenerator(State.Changed);
             }
-
         }
-
         private void RemoveDatabase(string pccAlias)
         {
             string dbFileName = $"{pccAlias.ToUpper()}_CLIENTDB.FDB";
@@ -157,6 +162,11 @@ namespace AliasChanger
                 return alias;
             }
             return alias;
+        }
+
+        private void changeRDAliascheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            sameRdAliasCheckBox.Enabled = true;
         }
     }
 }
